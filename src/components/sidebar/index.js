@@ -14,8 +14,8 @@ class SidebarController {
                 label: "Home"
             },
             {
-                state: "home.things",
-                label: "Things"
+                state: "home.visualizations",
+                label: "Visualizations"
             },
             {
                 state: "home.messages",

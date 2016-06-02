@@ -17,7 +17,7 @@ class MessagesController {
         this.messages = this.messagesService.getMessages();
 
         this.message = {
-            name: "Terrence",
+            name: null,
             text: null
         }
     }

@@ -28,6 +28,10 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "src/index.html",
             inject: 'body'
+        }),
+        new webpack.ProvidePlugin({
+            d3: "d3",
+            $: "jquery"
         })
     ],
     module: {
@@ -37,6 +41,9 @@ module.exports = {
                 exclude: /node_modules|assets|\.spec\.js$/,
                 loader: 'babel?presets[]=es2015&cacheDirectory'
             },
+            //Sass
+            {test: /\.scss$/, loader: "style!css!sass"},
+
             // plain 'ol CSS files
             {test: /\.css$/, loader: "style!css"},
 

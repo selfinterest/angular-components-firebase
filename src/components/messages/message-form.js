@@ -27,7 +27,7 @@ module.component("messageForm", {
               <input type="text" class="form-control" id="inputMessage" placeholder="Message" ng-model="vm.message.text">
             </div>
           </div>
-          <button type="submit" class="btn btn-default" ng-click="vm.submit()">Send</button>
+          <button type="submit" class="btn btn-default" ng-click="vm.submit()" ng-disabled="!vm.message.text || !vm.message.name">Send</button>
         </form>
     `
 });

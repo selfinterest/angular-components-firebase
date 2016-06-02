@@ -8,8 +8,12 @@
  */
 
 require("../node_modules/bootstrap/dist/css/bootstrap.css");
+//Before loading Angular, we need to load and assign jQuery to the window so that Angular will detect and use it.
+window.jQuery = window.$ = require("jquery");
+
 import angular from "angular";
 require("angular-ui-router");
+
 
 
 /* Main application module */
