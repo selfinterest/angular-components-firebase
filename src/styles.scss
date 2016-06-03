@@ -9,7 +9,8 @@
   }
 
   .scrollable-container {
-    overflow: scroll;
+    overflow-y: auto;
+    overflow-x: auto;
     height: $height;
   }
 
