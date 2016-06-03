@@ -4,10 +4,16 @@ let path = require("path")
     , NpmInstallPlugin = require("npm-install-webpack-plugin")
     , HtmlWebpackPlugin = require("html-webpack-plugin")
     , webpack = require("webpack")
+    , firebaseUrl = process.env.FIREBASE_URL || null
 ;
+
+if(!firebaseUrl) {
+    throw new Error("Must set FIREBASE_URL environment variable");
+}
 
 module.exports = {
     cache: true,
+    devtool: "sourcemap",
     entry: {
         app: [path.resolve("./src", "app.js")]
     },
@@ -24,6 +30,9 @@ module.exports = {
                 ].indexOf(module) === -1
             },
             peerDependencies: true
+        }),
+        new webpack.DefinePlugin({
+            __FIREBASE_URL__: `"${firebaseUrl}"`        //this needs quotation marks because it is inserted _as is_ into the code at compile time.
         }),
         new HtmlWebpackPlugin({
             template: "src/index.html",

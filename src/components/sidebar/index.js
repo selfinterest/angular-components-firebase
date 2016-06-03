@@ -5,6 +5,8 @@
 "use strict";
 
 import angular from "angular";
+require("angular-ui-router");
+
 
 class SidebarController {
     constructor(){
@@ -25,7 +27,7 @@ class SidebarController {
     }
 }
 
-let module = angular.module("tw.demoApp.components.sidebar", []);
+let module = angular.module("tw.demoApp.components.sidebar", ["ui.router"]);
 
 module.component("sidebar", {
     controller: SidebarController,
@@ -35,7 +37,7 @@ module.component("sidebar", {
           <li ng-repeat="item in sidebar.items" role="presentation" ui-sref-active-eq="active"><a ui-sref="{{item.state}}">{{item.label}}</a></li>
     </ul>
     `
-})
+});
 
 export {
     module as default,

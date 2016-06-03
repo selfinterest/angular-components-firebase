@@ -3,17 +3,19 @@
  */
 
 import angular from "angular";
-require("angular-resource");
 let Firebase = require("firebase");
 require("angularfire");
 
-let Chance = require("chance");
+//At compile time, webpack define plugin substitutes the firebase URL set in configuration
+let firebaseUrl = __FIREBASE_URL__;
+
 
 
 class MessagesService {
 
-    constructor($firebaseObject, $firebaseArray){
-        this._ref = new Firebase('https://terrence.firebaseio.com/');
+    constructor($log, $firebaseObject, $firebaseArray){
+        $log.info("Firebase URL is %s", firebaseUrl);
+        this._ref = new Firebase(firebaseUrl);
         this.messages = $firebaseArray(this._ref);
     }
 
@@ -28,10 +30,10 @@ class MessagesService {
 
 }
 
-MessagesService.$inject = ["$firebaseObject", "$firebaseArray"];
+MessagesService.$inject = ["$log", "$firebaseObject", "$firebaseArray"];
 
 
-let module = angular.module("tw.demoApp.components.messages.messagesService", ["ngResource", "firebase"]);
+let module = angular.module("tw.demoApp.components.messages.messagesService", ["firebase"]);
 
 module.service("messagesService", MessagesService);
 
