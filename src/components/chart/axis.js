@@ -34,6 +34,7 @@ class MheChartAxisController extends BaseComponent {
             if(this.reverse){
                 //TODO
             } else {
+
                 return [this.chart.innerChartHeight, 0]
             }
          }
@@ -64,8 +65,24 @@ class MheChartAxisController extends BaseComponent {
             axis.outerTickSize(tickSize[1]);
         }
 
+
         if(this.tickFormat) {
-            let format = d3.format(this.tickFormat);
+
+            let format;
+            //There are some special formats
+            if(this.tickFormat === "%") {
+                format = function(t) {
+                    return t + "%"
+                }
+            } else {
+                if(!angular.isFunction(this.tickFormat)){
+                    format = d3.format(this.tickFormat);
+                } else {
+                    format = this.tickFormat;
+                }
+            }
+
+
             axis.tickFormat(format);
         }
 
@@ -93,6 +110,7 @@ class MheChartAxisController extends BaseComponent {
     $onInit() {
         if (!this.scale) {
             this.scale = d3.scale[this.scaleType]();
+
         }
 
         this.axisElement = null;
@@ -105,12 +123,12 @@ class MheChartAxisController extends BaseComponent {
     redraw(data) {
         if(!data || !data.length) return;
 
-        this.axisElement = this.chart.getChart().append("g")
+        this.axisElement = this.axisElement || this.chart.getChart().append("g")
             .attr("class", `axis-${this.orientation} axis-${this.name}`)
             .attr("transform", this.translation())
         ;
         if (this.label) {
-            this.labelElement = this.axisElement.append("text").attr("class", "axis-label").text(this.label);
+            this.labelElement = this.labelElement || this.axisElement.append("text").attr("class", "axis-label").text(this.label);
         }
 
         let axis = this.getAxis();
@@ -124,10 +142,36 @@ class MheChartAxisController extends BaseComponent {
             .call(axis)
     }
 
+    setRange(){
+        if(this.scaleType === "ordinal") {
+            if(this.orientation === "top" || this.orientation === "bottom") {
+                this.scale.rangeRoundBands([0, this.chart.innerChartWidth], .5);
+            } else {
+                this.scale.rangeRoundBands([0, this.chart.innerChartHeight], .5);
+            }
+        } else {
+            if(this.orientation === "top" || this.orientation === "bottom") {
+                if(this.reverse) {
+                    //TODO
+                } else {
+                    return this.scale.range([0, this.chart.innerChartWidth])
+                }
+
+            } else {
+                if(this.reverse){
+                    //TODO
+                } else {
+
+                    return this.scale.range([this.chart.innerChartHeight, 0])
+                }
+            }
+        }
+    }
     updateScale(data) {
         if(!data || !data.length) return;
 
-        this.scale.range(this.range());
+        this.setRange();
+
 
         let domainValues = this.domain;
         
@@ -152,8 +196,12 @@ class MheChartAxisController extends BaseComponent {
 
         if(this.extent) {
             this.scale.domain(d3.extent(domainValues))
-        } else {
+        } else if (this.scaleType === "linear") {
+
             this.scale.domain([0, d3.max(domainValues)])
+        } else if (this.scaleType === "ordinal") {
+            this.scale.domain(domainValues);
+
         }
     }
 
@@ -172,11 +220,11 @@ module.directive("mheChartAxis", [function(){
             "orientation": "@",
             "scaleType": "@",
             "scale": "<",        //user can pass in a pre-defined scale
-            "tickFormat": "<",
+            "tickFormat": "@",
             "domain": "<",
             "tickValues": "<"
         },
-        controllerAs: "vm",
+        controllerAs: "axis",
         controller: MheChartAxisController
     }
 }]);

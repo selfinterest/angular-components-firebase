@@ -11,10 +11,13 @@ import messageList from "./message-list";
 import messageForm from "./message-form";
 
 class MessagesController {
-    constructor(messagesService){
+    constructor(messagesService, $scope){
         this.messagesService = messagesService;
 
         this.messages = this.messagesService.getMessages();
+
+        
+
 
         this.message = {
             name: null,
@@ -23,7 +26,7 @@ class MessagesController {
     }
 }
 
-MessagesController.$inject = ["messagesService"];
+MessagesController.$inject = ["messagesService", "$scope"];
 
 let routeConfig = function($stateProvider){
     $stateProvider

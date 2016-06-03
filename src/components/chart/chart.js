@@ -7,9 +7,11 @@ import d3 from "d3";
 require("./chart.scss");
 
 class MheChartController {
-    constructor($element, $window){
+    constructor($element, $window, $scope){
+
         this.$window = $window;
         this.$element = $($element);
+        this.$scope = $scope;
         this.element = $element[0]; //unwrapped element for direct DOM access
         this.defaults = {
             margin: {
@@ -33,7 +35,6 @@ class MheChartController {
     }
 
     $onInit(){
-
         this._options = angular.merge(this.defaults, this.options);
         this.margin = this._options.margin;
 
@@ -51,6 +52,9 @@ class MheChartController {
             .classed("svg-content-responsive", true)
             .append("g")
             .attr("transform", `translate(${this.margin.left}, ${this.margin.top})`)
+
+        let my = this;
+        this.$scope.$watchCollection(function(){ return my.data}, this.redraw.bind(this));
 
     }
 
@@ -75,6 +79,9 @@ class MheChartController {
     }
 
     redraw(){
+        console.log(this.data);
+        if(!this.data) return;
+
         if(this.$element.width() === 0 || this.$element.height() === 0) return;
 
         //Adjust scales of components
@@ -102,12 +109,16 @@ class MheChartController {
         })
     }
     $postLink(){
-        this.redraw();
+        //console.log(this);
+
+
+        //this.$scope.$watch( () => this.data, this.redraw.bind(this), true);
+        //this.redraw();
     }
 }
 
 
-MheChartController.$inject = ["$element"];
+MheChartController.$inject = ["$element", "$window", "$scope"];
 
 let module = angular.module("mhe.chart.chart", []);
 
@@ -120,7 +131,7 @@ module.directive("mheChart", [function(){
             options: "="
         },
         controller: MheChartController,
-        controllerAs: "vm"
+        controllerAs: "chart"
     }
 }]);
 
