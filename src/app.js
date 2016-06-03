@@ -13,7 +13,7 @@ window.jQuery = window.$ = require("jquery");
 
 import angular from "angular";
 require("angular-ui-router");
-
+require("./styles.scss");
 
 
 /* Main application module */
@@ -31,10 +31,10 @@ let routeConfig = ($urlRouterProvider, $stateProvider) => {
             template: `
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-2">
+                        <div class="col-md-2">
                             <sidebar></sidebar>
                         </div>
-                        <div class="col-lg-10">
+                        <div class="col-md-10">
                             <!-- main content -->
                             <ui-view></ui-view>
                         </div>
@@ -44,8 +44,30 @@ let routeConfig = ($urlRouterProvider, $stateProvider) => {
         })
         .state("home.home", {
             url: "",
+            controller: ["messagesService", "$scope", function(messagesService, $scope){
+                $scope.messages = messagesService.getMessages();
+                $scope.messagesService = messagesService;
+                $scope.message = {};
+            }],
             template: `
-                <div>Home</div>
+                <div class="row home">
+                    <div class="col-sm-4 message-list">
+                        <div class="scrollable-container">
+                            <message-list messages="messages"></message-list>
+                        </div>
+                                       
+                    </div>
+                    <div class="col-sm-8 messages-by-name">
+                        
+                        <messages-by-name messages="messages"></messages-by-name>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <message-form message="message" submit="messagesService.sendMessage(message); message.text = ''"></message-form>
+                    </div>
+                    
+                </div>
             `
         })
 

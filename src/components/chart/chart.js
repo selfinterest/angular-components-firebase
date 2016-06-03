@@ -39,6 +39,7 @@ class MheChartController {
         this.margin = this._options.margin;
 
 
+
         this.innerChartWidth = this.$element.width() - this.margin.left - this.margin.right;
         this.innerChartHeight = this.$element.height() - this.margin.top - this.margin.bottom;
 
@@ -75,7 +76,7 @@ class MheChartController {
     redraw(){
 
         if(!this.data) return;
-
+        
         if(this.$element.width() === 0 || this.$element.height() === 0) return;
 
         //Update scales

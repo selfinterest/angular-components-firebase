@@ -1,0 +1,27 @@
+.home {
+  display: block;
+  $black: #222222;
+  $height: 400px;
+
+  div[mhe-chart] {
+    height: $height;
+    width: 100%;
+  }
+
+  .scrollable-container {
+    overflow: scroll;
+    height: $height;
+  }
+
+  .axis-name {
+    line { fill: none; stroke-width: 1px; stroke: $black; opacity: 0.5; }
+    path { fill: none; stroke-width: 1px; stroke: $black; opacity: 0.5; }
+    text { fill: $black; }
+  }
+
+  .axis-val {
+    line { fill: none; stroke-width: 1px; stroke: $black; opacity: 0.5; }
+    path { fill: none; stroke-width: 1px; stroke: $black; opacity: 0.5; }
+    text { fill: $black; }
+  }
+}

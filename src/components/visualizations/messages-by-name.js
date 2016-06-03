@@ -22,12 +22,12 @@ class MessagesByNameController {
                right: 60
            }
        }
-        
+
         
     }
 
     update(newArray, oldArray){
-
+        console.log("Watch firing", newArray);
         if(newArray.length){
             //compute data
 
@@ -59,7 +59,7 @@ class MessagesByNameController {
         }
     }
     $onInit(){
-
+        console.log(this.messages);
     }
 
     $postLink(){
