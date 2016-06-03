@@ -10,7 +10,12 @@ import mheChart from "../chart";
 
 class MessagesByNameController {
     constructor(){
-       this.data = []; 
+       this.data = ["blah"];
+    }
+
+    $onInit(){
+        this.data = ["blah"];
+
     }
 }
 
@@ -23,7 +28,9 @@ module.component("messagesByName", {
     controllerAs: "vm",
     controller: MessagesByNameController,
     template: `
+        <div>{{vm.obj.property}}</div>
         <div mhe-chart data="vm.data">
+           
             <mhe-chart-axis name="names" label="Names" orientation="bottom"></mhe-chart-axis>
             <mhe-chart-axis name="numMessages" label="Messages" orientation="left"></mhe-chart-axis>
         </div>

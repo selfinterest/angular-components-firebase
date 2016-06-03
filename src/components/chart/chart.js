@@ -8,6 +8,7 @@ require("./chart.scss");
 
 class MheChartController {
     constructor($element){
+
         this.$element = $($element);
         this.element = $element[0]; //unwrapped element for direct DOM access
         this.defaults = {
@@ -26,6 +27,7 @@ class MheChartController {
     }
 
     $onInit(){
+        console.log(this);
         this._options = angular.merge(this.defaults, this.options);
         this.margin = this._options.margin;
 
@@ -37,6 +39,8 @@ class MheChartController {
             .classed("svg-container", true)
             .append("svg")
             .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("width", "100%")
+            .attr("height", "100%")
             .attr("viewBox", `0 0 ${this.innerChartWidth + this.margin.left + this.margin.right} ${this.innerChartHeight + this.margin.top + this.margin.bottom}`)
             .classed("svg-content-responsive", true)
             .append("g")
@@ -53,7 +57,8 @@ let module = angular.module("mhe.chart.chart", []);
 module.directive("mheChart", [function(){
     return {
         restrict: "AE",
-        bindToController: {
+        bindToController: true,
+        scope: {
             data: "=",
             options: "="
         },
