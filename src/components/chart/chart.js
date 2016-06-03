@@ -58,41 +58,25 @@ class MheChartController {
 
     }
 
-    addScale(name, scale, updateFn){
-        //this.scales.set(name, {scale: scale, update: updateFn});
-    }
 
-    registerElement(element){
-        //this.elements.push({redraw: element});
+    getScaleByComponentName(name){
+        return this.scales.get(name);
     }
 
     registerComponent(component){
-        /*if(component.updateScale) {
-            //if the component has a scale, register the scale
-            this.scales.set(component.name, component);
-        }
 
-        if(component.redraw) {
-            this.elements.push(component);
-        }*/
         this.components.push(component);
+        //If a component has a scale, we register the scales in a separate collection so they can be retrieved later by name
+        if(component.scale) {
+            this.scales.set(component.name, {scale: component.scale, scaleType: component.scaleType});
+        }
     }
 
     redraw(){
-        console.log(this.data);
+
         if(!this.data) return;
 
         if(this.$element.width() === 0 || this.$element.height() === 0) return;
-
-        //Adjust scales of components
-        /*for(var [scaleName, component] of this.scales) {
-            component.updateScale(this.data);
-        }
-
-        //Redraw components
-        this.elements.forEach( component => {
-            element.redraw(data);
-        })*/
 
         //Update scales
         this.components.forEach(component => {
@@ -109,11 +93,7 @@ class MheChartController {
         })
     }
     $postLink(){
-        //console.log(this);
 
-
-        //this.$scope.$watch( () => this.data, this.redraw.bind(this), true);
-        //this.redraw();
     }
 }
 
