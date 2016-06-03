@@ -1,4 +1,6 @@
 .visualizations.messages-by-name {
+
+  $black: #222222;
   display: block;
 
   div[mhe-chart] {
@@ -8,5 +10,16 @@
 
 
 
+  .axis-name {
+    line { fill: none; stroke-width: 1px; stroke: $black; opacity: 0.5; }
+    path { fill: none; stroke-width: 1px; stroke: $black; opacity: 0.5; }
+    text { fill: $black; }
+  }
 
+  .axis-val {
+    line { fill: none; stroke-width: 1px; stroke: $black; opacity: 0.5; }
+    path { fill: none; stroke-width: 1px; stroke: $black; opacity: 0.5; }
+    text { fill: $black; }
+  }
 }
+

@@ -10,11 +10,27 @@ import mheChart from "../chart";
 
 class MessagesByNameController {
     constructor(){
-       this.data = ["blah"];
+       this.data = [
+           {
+               val: 50,
+               name: "Jie"
+           }
+       ];
+       this.options = {
+           margin: {
+               top: 20,
+               bottom: 60,
+               left: 60,
+               right: 60
+           }
+       }
+
+       //this.domain = [0, 100];
+       //this.tickValues = [0, 25, 50, 75, 100];
     }
 
     $onInit(){
-        this.data = ["blah"];
+        //this.data = ["blah"];
 
     }
 }
@@ -28,11 +44,10 @@ module.component("messagesByName", {
     controllerAs: "vm",
     controller: MessagesByNameController,
     template: `
-        <div>{{vm.obj.property}}</div>
-        <div mhe-chart data="vm.data">
+        <div mhe-chart data="vm.data" options="vm.options">
            
-            <mhe-chart-axis name="names" label="Names" orientation="bottom"></mhe-chart-axis>
-            <mhe-chart-axis name="numMessages" label="Messages" orientation="left"></mhe-chart-axis>
+            <mhe-chart-axis name="name" label="Names" orientation="bottom"></mhe-chart-axis>
+            <mhe-chart-axis name="val" label="Messages" orientation="left" tick-values="[0, 25, 50, 75, 100]" domain="[0, 100]" tick-format="tickFormat"></mhe-chart-axis>
         </div>
             
     `

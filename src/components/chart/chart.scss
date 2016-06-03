@@ -1,4 +1,5 @@
 //Utility classes for SVG auto resizing
+
 .svg-container {
   display: inline-block;
   position: relative;
@@ -8,9 +9,12 @@
   overflow: hidden;
 }
 .svg-content-responsive {
+  $black: #222222;
   display: inline-block;
   position: absolute;
   //top: 10px;
   left: 0;
+
+
 }
 
