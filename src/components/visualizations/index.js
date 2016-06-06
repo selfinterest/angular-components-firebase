@@ -3,6 +3,8 @@
 import angular from "angular";
 import messagesService from "../messages/messagesService";
 import messagesByName from "./messages-by-name";
+import messagesWithVowels from "./messages-with-vowels";
+
 require("angular-ui-router");
 require("./visualizations.scss");
 
@@ -29,7 +31,7 @@ let routeConfig = function($stateProvider){
 routeConfig.$inject = ["$stateProvider"];
 
 
-let module = angular.module("tw.demoApp.components.visualizations", ["ui.router", "tw.demoApp.components.messages.messagesService", messagesByName.name]);
+let module = angular.module("tw.demoApp.components.visualizations", ["ui.router", "tw.demoApp.components.messages.messagesService", messagesByName.name, messagesWithVowels.name]);
 
 module.config(routeConfig);
 
