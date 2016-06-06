@@ -82,7 +82,7 @@ module.component("messagesByName", {
     controller: MessagesByNameController,
     template: `
         <div mhe-chart data="vm.data" options="vm.options" chart-title="Proportion of Messages By Individuals">
-            <mhe-chart-axis name="name" label="Names" orientation="bottom" scale-type="ordinal"></mhe-chart-axis>
+            <mhe-chart-axis name="name" label="Names" orientation="bottom" scale-type="ordinal" tick-fit="stagger"></mhe-chart-axis>
             <mhe-chart-axis name="val" label="Messages" orientation="left" tick-values="[0, 25, 50, 75, 100]" domain="[0, 100]" tick-format="%"></mhe-chart-axis>
             <mhe-chart-bars x="name" y="val"></mhe-chart-bars>
         </div>
