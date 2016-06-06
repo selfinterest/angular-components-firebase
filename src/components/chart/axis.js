@@ -192,12 +192,11 @@ class MheChartAxisController extends BaseComponent {
             })();
 
         }
-
+        
 
         if(this.extent) {
             this.scale.domain(d3.extent(domainValues))
         } else if (this.scaleType === "linear") {
-
             this.scale.domain([0, d3.max(domainValues)])
         } else if (this.scaleType === "ordinal") {
             this.scale.domain(domainValues);

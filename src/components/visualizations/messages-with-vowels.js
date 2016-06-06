@@ -14,13 +14,22 @@ class MessagesWithVowelsController {
         });
 
         //A memoized lookup function to make things fast
-        this.findVowelIndex = _.memoize( v => {
+        this.findVowelIndex =  v => {
             return vowels.indexOf(v.toUpperCase());
-        });
+        };
 
         this.$scope = $scope;
         this.vowels = /[AEIOU]/g;
 
+
+        this.options = {
+            margin: {
+                top: 60,
+                bottom: 80,
+                left: 90,
+                right: 60
+            }
+        }
 
     }
 
@@ -47,12 +56,11 @@ class MessagesWithVowelsController {
         var vowelMap = {};
 
         messages.forEach( message => {
-            var m = message.text.match(this.vowels);
+            var m = message.text.toUpperCase().match(this.vowels);
             if(m && m.length) {
                 //Go through each vowel
                 m.forEach( v => {
                     //Find the data item
-
                     var i = this.findVowelIndex(v);
                     if(i > -1) {
                         this.data[i].count++;
@@ -62,57 +70,10 @@ class MessagesWithVowelsController {
             }
         });
 
-//        console.log(this.data);
-
-//        debugger;
-
-        return;
-        //Find the difference between the two arrays
-
-        //Concatenate message text into one big string
-        //var bigString = "", vowelMap = {};
-
-        messages.forEach( message => bigString += message.text.toLowerCase());
-
-        var vowels = this.getVowels(bigString);
-        /*this.vowels.forEach( vowel => {
-           var found = bigString.indexOf(vowel);
-            if(found > -1) {
-                if(!vowelMap[vowel]) vowelMap[vowel] = { vowel: vowel, count: 0};
-
-                vowelMap[vowel].count++;
-            }
-        });*/
-
-        /*for(var i = 0; i < bigString.length; i++){
-            var c = bigString.charAt(i);
-            var whichVowel = this.vowels.indexOf(c), vowel;
-            if(whichVowel > -1){
-                vowel = this.vowels[whichVowel];
-                if(typeof vowelMap[vowel] === "undefined") vowelMap[vowel] = 0;
-                vowelMap[vowel]++;
-            }
-        }*/
-
-        //Spin into an array of objects at the end
-        /*var data = [];
-        Object.keys(vowelMap).forEach(vowel => {
-            data.push({
-                vowel: vowel,
-                count: vowelMap[vowel]
-            })
-        });
-
-        this.data = data;*/
-        this.data = _.values(vowelMap);
-        console.log(this.data);
-
-
-
     }
 
     $onInit(){
-
+        this.update(this.messages, []);
 
 
     }
@@ -130,10 +91,17 @@ let module = angular.module("tw.demoApp.components.visualizations.messages-with-
 
 module.component("messagesWithVowels", {
    controller: MessagesWithVowelsController,
-   controllerAs: "messagesWithVowels",
+   controllerAs: "vm",
    bindings: {
        "messages": "="
-   }
+   },
+   template: `
+    <div mhe-chart data="vm.data" options="vm.options" chart-title="Number of Vowels">
+            <mhe-chart-axis name="vowel" label="Vowels" orientation="bottom" scale-type="ordinal"></mhe-chart-axis>
+            <mhe-chart-axis name="count" label="Count" orientation="left" scale-type="linear" extent="true"></mhe-chart-axis>
+            <mhe-chart-bars x="vowel" y="count"></mhe-chart-bars>
+    </div>
+   `
 });
 
 export default module;

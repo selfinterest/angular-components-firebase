@@ -53,7 +53,7 @@ class MheChartController {
             .attr("transform", `translate(${this.margin.left}, ${this.margin.top})`);
 
         let my = this;
-        this.$scope.$watchCollection(function(){ return my.data}, this.redraw.bind(this));
+        this.$scope.$watch(function(){ return my.data}, this.redraw.bind(this), true);
 
     }
 
