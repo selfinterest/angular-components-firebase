@@ -82,9 +82,10 @@ class MheChartAxisController extends BaseComponent {
                 }
             }
 
-
             axis.tickFormat(format);
         }
+
+
 
         return axis;
     }
@@ -134,12 +135,47 @@ class MheChartAxisController extends BaseComponent {
         let axis = this.getAxis();
 
         if (this.labelElement) {
-            this.positionLabel(this.labelElement.transition().duration(500))
+            this.positionLabel(this.labelElement)
         }
 
-        this.axisElement.transition().duration(500)
+        this.axisElement
             .attr("transform", this.translation())
-            .call(axis)
+            .call(axis);
+
+        if(this.tickFit === "rotate") {
+//            var my = this;
+            this.chart.chart.selectAll(`.axis-${this.name} text`)
+
+                .attr("transform", d => {
+                    console.log("Rotating");
+                    return `translate(-10, ${this.chart.margin.bottom / 2 - 10})rotate(-30)`;
+                    //return `translate(${this.chart.innerChartHeight * -2}, ${this.chart.innerChartHeight})rotate(-45)`;
+                })
+        } else if (this.tickFit === "stagger") {
+
+            var shortTickLength = 4;
+            var longTickLength = 18;
+            var tickFlag = false;
+            setTimeout(function(){
+                this.axisElement.selectAll(`.tick line`)
+                    .filter(function(d, i){
+
+                        return i % 2;
+                    })
+                    .attr("y2", longTickLength)
+
+                this.axisElement.selectAll('.tick text')
+                    .filter(function(d, i){
+                        return i % 2;
+                    })
+                    .attr("y", function(){
+                        return longTickLength + 1;
+                    })
+            }.bind(this), 100);
+            
+        }
+
+
     }
 
     setRange(){
@@ -222,7 +258,8 @@ module.directive("mheChartAxis", [function(){
             "scale": "<",        //user can pass in a pre-defined scale
             "tickFormat": "@",
             "domain": "<",
-            "tickValues": "<"
+            "tickValues": "<",
+            "tickFit": "@"
         },
         controllerAs: "axis",
         controller: MheChartAxisController
