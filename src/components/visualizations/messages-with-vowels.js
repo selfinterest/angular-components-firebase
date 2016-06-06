@@ -52,7 +52,7 @@ class MessagesWithVowelsController {
                 //Go through each vowel
                 m.forEach( v => {
                     //Find the data item
-                    
+
                     var i = this.findVowelIndex(v);
                     if(i > -1) {
                         this.data[i].count++;
@@ -62,9 +62,9 @@ class MessagesWithVowelsController {
             }
         });
 
-        console.log(this.data);
+//        console.log(this.data);
 
-        debugger;
+//        debugger;
 
         return;
         //Find the difference between the two arrays
