@@ -40,7 +40,8 @@ module.component("visualizations", {
         <h1>Visualizations</h1>
         <div class="row">
             <div class="col-lg-12">
-                <messages-by-name messages="vm.messages" class="visualizations messages-by-name"></messages-by-name>
+                <messages-by-name messages="vm.messages" class="visualizations messages-by-name">
+                </messages-by-name>
             </div>
         </div>
         <div class="row">

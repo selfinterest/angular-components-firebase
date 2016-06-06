@@ -4,6 +4,7 @@
 
 class BaseComponent {
     constructor(defaults){
+        //Copy defaults to instance
         Object.keys(defaults).forEach( propertyName => {
             if(typeof this[propertyName] === "undefined") {
                 this[propertyName] = defaults[propertyName];

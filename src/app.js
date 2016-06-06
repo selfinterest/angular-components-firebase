@@ -58,7 +58,6 @@ let routeConfig = ($urlRouterProvider, $stateProvider) => {
                                        
                     </div>
                     <div class="col-sm-8 messages-by-name">
-                        
                         <messages-by-name messages="messages"></messages-by-name>
                     </div>
                 </div>

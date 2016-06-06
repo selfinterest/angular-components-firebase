@@ -38,8 +38,6 @@ class MheChartController {
         this._options = angular.merge(this.defaults, this.options);
         this.margin = this._options.margin;
 
-
-
         this.innerChartWidth = this.$element.width() - this.margin.left - this.margin.right;
         this.innerChartHeight = this.$element.height() - this.margin.top - this.margin.bottom;
 
@@ -52,7 +50,7 @@ class MheChartController {
             .attr("viewBox", `0 0 ${this.innerChartWidth + this.margin.left + this.margin.right} ${this.innerChartHeight + this.margin.top + this.margin.bottom}`)
             .classed("svg-content-responsive", true)
             .append("g")
-            .attr("transform", `translate(${this.margin.left}, ${this.margin.top})`)
+            .attr("transform", `translate(${this.margin.left}, ${this.margin.top})`);
 
         let my = this;
         this.$scope.$watchCollection(function(){ return my.data}, this.redraw.bind(this));
@@ -73,11 +71,39 @@ class MheChartController {
         }
     }
 
+    titleTranslation(){
+        return `translate(${this.innerChartWidth / 2}, ${-this.margin.top / 2})`;
+    }
+
+    drawTitle(){
+        if(this.chartTitle){
+            //Draw and position title
+            this.titleContainer = this.titleContainer || this.getChart().append("g")
+                    .attr("class", `chart-title-container`)
+            ;
+
+            //Position title container
+            this.titleContainer.attr("transform", this.titleTranslation())
+
+            //Add text to container
+            this.titleElement = this.titleElement || this.titleContainer
+                    .append("text")
+                    .classed("chart-title", true)
+                    .text(this.chartTitle)
+                    .attr("style", "text-anchor: middle;")
+
+            //Position title Element
+
+
+        }
+    }
+
     redraw(){
 
         if(!this.data) return;
         
         if(this.$element.width() === 0 || this.$element.height() === 0) return;
+
 
         //Update scales
         this.components.forEach(component => {
@@ -92,6 +118,8 @@ class MheChartController {
                 component.redraw(this.data);
             }
         })
+
+        this.drawTitle();
     }
     $postLink(){
 
@@ -109,7 +137,8 @@ module.directive("mheChart", [function(){
         bindToController: true,
         scope: {
             data: "=",
-            options: "="
+            options: "=",
+            chartTitle: "@"
         },
         controller: MheChartController,
         controllerAs: "chart"

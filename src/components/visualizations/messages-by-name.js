@@ -16,7 +16,7 @@ class MessagesByNameController {
 
        this.options = {
            margin: {
-               top: 20,
+               top: 60,
                bottom: 80,
                left: 90,
                right: 60
@@ -27,7 +27,7 @@ class MessagesByNameController {
     }
 
     update(newArray, oldArray){
-        console.log("Watch firing", newArray);
+
         if(newArray.length){
             //compute data
 
@@ -59,7 +59,7 @@ class MessagesByNameController {
         }
     }
     $onInit(){
-        console.log(this.messages);
+
     }
 
     $postLink(){
@@ -81,8 +81,7 @@ module.component("messagesByName", {
     controllerAs: "vm",
     controller: MessagesByNameController,
     template: `
-        <div mhe-chart data="vm.data" options="vm.options">
-           
+        <div mhe-chart data="vm.data" options="vm.options" chart-title="Proportion of Messages By Individuals">
             <mhe-chart-axis name="name" label="Names" orientation="bottom" scale-type="ordinal"></mhe-chart-axis>
             <mhe-chart-axis name="val" label="Messages" orientation="left" tick-values="[0, 25, 50, 75, 100]" domain="[0, 100]" tick-format="%"></mhe-chart-axis>
             <mhe-chart-bars x="name" y="val"></mhe-chart-bars>

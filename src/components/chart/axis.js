@@ -214,6 +214,7 @@ module.directive("mheChartAxis", [function(){
         require: {
             chart: "^mheChart"
         },
+        scope: true,
         bindToController: {
             "name": "@",
             "label": "@",
